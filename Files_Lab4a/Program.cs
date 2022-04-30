@@ -6,7 +6,7 @@ namespace Files_Lab4a
     {
         private static void Main(string[] args)
         {
-            Class1.Search(@"C:\");
+            Class1.Search(@"C:\Users\Honorata.Lyczak\Desktop");
         }
     }
 }
