@@ -23,6 +23,12 @@ namespace Files_Lab4a
             this.maxSize = 0;
         }
 
+        public Property(int count, long totalsize)
+        {
+            this.count = count;
+            this.totalSize = totalsize;
+        }
+
         public void Add(long a)
         {
             count += 1;
@@ -34,6 +40,20 @@ namespace Files_Lab4a
 
             if (a > maxSize)
                 maxSize = a;
+        }
+
+        public static string ToMb(long size)
+        {
+            if (size > 8000000)
+            {
+                return $"{((double)size / 8000000).ToString("#.#")}MB";
+            }
+            if (size > 8000)
+            {
+                return $"{((double)size / 8000).ToString("#.#")}KB";
+            }
+
+            return $"{size}B";
         }
     }
 }

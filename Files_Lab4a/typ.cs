@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Files_Lab4a
 {
-    internal class Typ : IEnumerable
+    public class Typ : IEnumerable<string>
     {
         public Dictionary<string, Property> typ = new Dictionary<string, Property>();
 
@@ -22,19 +22,19 @@ namespace Files_Lab4a
 
         public void add(string ext, long leng)
         {
-            if (ext == "jpg" || ext == "img")
+            if (ext == ".jpg" || ext == ".img")
             {
                 this.typ["image"].Add(leng);
             }
-            else if (ext == "mp3")
+            else if (ext == ".mp3")
             {
                 this.typ["audio"].Add(leng);
             }
-            else if (ext == "doc" || ext == "xls")
+            else if (ext == ".doc" || ext == ".xls" || ext == ".docx")
             {
                 this.typ["document"].Add(leng);
             }
-            else if (ext == "mp4")
+            else if (ext == ".mp4")
             {
                 this.typ["video"].Add(leng);
             }
@@ -44,9 +44,17 @@ namespace Files_Lab4a
             }
         }
 
-        public IEnumerator GetEnumerator()
+        public IEnumerator<string> GetEnumerator()
         {
-            throw new NotImplementedException();
+            foreach (var item in typ)
+            {
+                yield return string.Format("{0,15}{1,15}{2,15}{3,15}{4,15}", item.Key, item.Value.count, Property.ToMb(item.Value.totalSize), Property.ToMb(item.Value.avgSize), Property.ToMb(item.Value.maxSize), Property.ToMb(item.Value.minSize));
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return typ.Values.GetEnumerator();
         }
     }
 }

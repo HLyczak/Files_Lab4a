@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Files_Lab4a
 {
-    public class Extension : IEnumerable
+    public class Extension : IEnumerable<string>
     {
         public Dictionary<string, Property> extensions = new Dictionary<string, Property>();
 
@@ -22,30 +22,29 @@ namespace Files_Lab4a
             extensions.Add("[other]", new Property());
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
         public void add(string ext, long leng)
         {
-            if (ext == "jpg")
+            if (ext == ".jpg")
             {
                 this.extensions["jpg"].Add(leng);
             }
-            else if (ext == "png")
+            else if (ext == ".png")
             {
                 this.extensions["png"].Add(leng);
             }
-            else if (ext == "gif")
+            else if (ext == ".gif")
             {
                 this.extensions["gif"].Add(leng);
             }
-            else if (ext == "doc")
+            else if (ext == ".doc" || ext == ".xls" || ext == ".docx")
             {
                 this.extensions["doc"].Add(leng);
             }
-            else if (ext == "mp3")
+            else if (ext == ".txt")
+            {
+                this.extensions["txt"].Add(leng);
+            }
+            else if (ext == ".mp3")
             {
                 this.extensions["mp3"].Add(leng);
             }
@@ -53,6 +52,19 @@ namespace Files_Lab4a
             {
                 this.extensions["[other]"].Add(leng);
             }
+        }
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            foreach (var item in extensions)
+            {
+                yield return string.Format("{0,15}{1,15}{2,15}{3,15}{4,15}", item.Key, item.Value.count, Property.ToMb(item.Value.totalSize), Property.ToMb(item.Value.avgSize), Property.ToMb(item.Value.maxSize), Property.ToMb(item.Value.minSize));
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return extensions.Values.GetEnumerator();
         }
     }
 }
